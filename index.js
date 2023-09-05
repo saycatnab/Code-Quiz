@@ -1,6 +1,6 @@
 // Get all relevent elements from html var name = document. getElement/ querySelect
 var startButton = document.querySelector("#start-screen");
-var timerElement = document.querySelector(".time");
+var timerElement = document.querySelector("#time");
 var fullQuestion = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var questionChoices = document.querySelector("#choices")
@@ -31,13 +31,36 @@ var questionsList = [
 ];
 
 var timer;
+var timerCount;
+var isWin = false;
 
 function startQuiz(){
-    timer = 60
-    startTimer()
-    renderQuestion()
+    isWin = false;
+    timerCount = 60;
+    startTimer();
+    // renderQuestion();
 
 }
+
+function startTimer(){
+    timer = setInterval(function(){
+        timerCount--;
+        timerElement.textContent = timerCount;
+        if (timerCount >= 0){
+            if(isWin && timerCount > 0){
+                clearInterval(timer);
+                endScreen();
+            }
+        }
+
+        if(timerCount === 0){
+            clearInterval(timer);
+            endScreen();
+        }
+    }, 1000);
+}
+
+startButton.addEventListener("click", startQuiz);
 
 
 
